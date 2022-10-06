@@ -1,0 +1,36 @@
+p {
+    font-size: 40px;
+}
+
+img {
+    width: 1000px; height: 400px;
+}
+
+h1 {
+    font-family:comic sans ms;
+}
+
+button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background-color: #179ecb;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+button:hover {
+    background-color: #8dcbff
+}
+
+button:active {
+    
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
