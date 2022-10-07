@@ -1,0 +1,98 @@
+DEFINE Statistics
+   gamesWithSameDoorWon EQUAL []
+   gamesWithSameDoorLost EQUAL []
+   gamesWithDoorChangeWon EQUAL []
+   gamesWithDoorChangeLost EQUAL []
+
+   SEQUENCE percentageWonNotChangingDoor
+      percentageWonNotChangingDoor EQUAL (gamesWithSameDoorWon PROPERTY length DIVISE gamesWithSameDoorLost PROPERTY length) MULTIPLY 100;
+      RETURN percentageWonNotChangingDoor;
+    END SEQUENCE
+
+   SEQUENCE pctWinChangingDoor
+      pctWinChangingDoor EQUAL (gamesWithDoorChangeWon.length DIVISE gamesWithDoorChangeLost PROPERTY length) MULTIPLY 100;
+      RETURN pctWinChangingDoor;
+    END SEQUENCE
+
+
+DEFINE Door
+   number EQUAL number
+   isCar EQUAL isCar
+   opened EQUAL false
+
+
+DEFINE Game
+        doors EQUAL Array
+        
+        doors push Door(3,false) 
+        doors push Door(2,false) 
+        doors push Door(1,false) 
+        
+        carDoor EQUAL initCarDoor
+        initialPlayerPick EQUAL initPlayerPick
+        openedGoatDoor EQUAL goatDoorPick
+        
+   
+        SEQUENCE initCarDoor
+           carDoorIndex EQUAL randomize MULTIPLY by doors length
+           carDoor EQUAL doors[carDoorIndex]
+           carDoor.isCar EQUAL true
+           RETURN carDoor
+        END SEQUENCE
+
+        SEQUENCE initPlayerPick
+           index EQUAL randomize MULTIPLY doors length
+           RETURN doors[index]
+        END SEQUENCE
+
+        SEQUENCE goatDoorPick
+           for index EQUAL 0, index < doors length, index + 1
+             goat EQUAL doors[index]
+           if not goat.isCar AND goat.number NOT EQUAL initialPlayerPick.number
+            goat.isOpen EQUAL true
+           END LOOP
+
+            RETURN goat
+        END SEQUENCE
+
+        SEQUENCE switchDoor
+          for door of this.doors
+            if door PROPERTY number not EQUAL initialPlayerPick PROPERTY number and not door.isOpen
+                RETURN door;
+        END SEQUENCE
+
+        SEQUENCE result (toSwitch)    
+          if (toSwitch)
+            finalDoor EQUAL SEQUENCE switchDoor
+          else 
+            finalDoor EQUAL initialPlayerPick
+        END SEQUENCE
+
+percentWinSwitch
+
+percentWinNoSwitch
+
+SEQUENCE runGameSimulations(numberOfGames)
+   switchWinTally EQUAL 0
+   noSwitchWinTally EQUAL 0
+    for index EQUAL 0, index < numberOfGames, index ADD 1
+        game EQUAL Game
+        
+        game PROPERTY result(true)
+        if game PROPERTY finalDoor PROPERTY isCar
+            switchWinTally ADD 1
+        
+        game PROPERTY result(false)
+        if game PROPERTY finalDoor PROPERTY isCar
+            noSwitchWinTally ADD 1
+    END LOOP
+        
+    percentWinSwitch EQUAL (switchWinTally MULTIPLY 100 ) DIVISE numberOfGames;
+    percentWinNoSwitch EQUAL (noSwitchWinTally MULTIPLY 100) DIVISE numberOfGames;
+
+
+RUN SEQUENCE runGameSimulations(100000)
+
+print percentWinSwitch plus "% of games were won when not switching door."
+
+print percentWinNoSwitch plus "% of games were won when switching door."

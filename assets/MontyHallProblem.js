@@ -136,3 +136,4 @@ document.getElementById("demo2").innerHTML = percentWinNoSwitch + "% of games we
 function myFunction() {
     document.getElementById("myForm").reset();
 }
+
