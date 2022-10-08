@@ -7,19 +7,6 @@ class Statistics {
         
     }  
 
-    // Percentage between win and losses arrays
-    percentageWonNotChangingDoor() {
-        let percentageWonNotChangingDoor = (this.gamesWithSameDoorWon.length / this.gamesWithSameDoorLost.length) * 100;
-        return Math.floor(percentageWonNotChangingDoor);
-    }
-    
-
-    // Percentage between win and losses arrays
-    pctWinChangingDoor() {
-        let pctWinChangingDoor = (this.gamesWithDoorChangeWon.length / this.gamesWithDoorChangeLost.length) * 100;
-        return Math.floor(pctWinChangingDoor);
-    }
-    
 
 }
 
