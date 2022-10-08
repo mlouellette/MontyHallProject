@@ -116,8 +116,8 @@ function runGameSimulations(numberOfGames){
 runGameSimulations(100000);
 
 // Html element 
-document.getElementById("demo").innerHTML = percentWinSwitch + "% of games were won when not switching door.";
-document.getElementById("demo2").innerHTML = percentWinNoSwitch + "% of games were won when switching door.";
+document.getElementById("demo").innerHTML = percentWinSwitch + "% of games were won when switching door.";
+document.getElementById("demo2").innerHTML = percentWinNoSwitch + "% of games were won when not switching door.";
 
 // Reset the page after pressing the button element
 function myFunction() {
